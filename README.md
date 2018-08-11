@@ -2,7 +2,7 @@
 
 To manage your repository's secret encryption natively within Git.
 
-[![asciicast](https://asciinema.org/a/TCwoyYQmGifLDIcCJ11398gSn.png)](https://asciinema.org/a/TCwoyYQmGifLDIcCJ11398gSn)
+[![asciicast](https://asciinema.org/a/kfjp37Fii38sr0MlQvFht1WoK.png)](https://asciinema.org/a/kfjp37Fii38sr0MlQvFht1WoK)
 
 ## IMPORTANT!
 
