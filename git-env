@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+case "${1}" in
+create)
+  echo """what encryption method are you using?
+  (1) GPG
+  (2) Google KMS
+  (3) AWS PMS
+  (4) Other 
+  """
+  read
+  echo "would you like to create a new key? (y/n)"
+  read
+  echo "what is the name of the keyring? (git-env)"
+  read
+  echo "what is the name of the key? (${2})"
+  read
+  echo "created global/keyRings/git-env/${2}..."
+  ;;
+add)
+  echo "added "
+esac
