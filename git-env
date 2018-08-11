@@ -27,7 +27,7 @@ add)
   echo "added new environment variable \"${2}\""
   ;;
 rotate)
-  echo "${2#*.}=${3}" >> ".gitenv/${2%.*}"
+  echo "${2#*.}=${3}" > ".gitenv/${2%.*}"
   echo "rotated environment variable \"${2}\""
   ;;
 list)
