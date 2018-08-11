@@ -15,8 +15,27 @@ create)
   read
   echo "what is the name of the key? (${2})"
   read
+  mkdir -p .gitenv
+  echo """[${2}]
+encryption_method=kms
+encryption_key=global/keyRings/git-env/${2}
+  """ > .gitenv/config
   echo "created global/keyRings/git-env/${2}..."
   ;;
 add)
-  echo "added "
+  echo "${2#*.}=${3}" >> ".gitenv/${2%.*}"
+  echo "added new environment variable \"${2}\""
+  ;;
+rotate)
+  echo "${2#*.}=${3}" >> ".gitenv/${2%.*}"
+  echo "rotated environment variable \"${2}\""
+  ;;
+list)
+  cat ".gitenv/${2}"
+  ;;
+export)
+  set -a
+  source ".gitenv/${2}"
+  set +a
+  ;;
 esac
