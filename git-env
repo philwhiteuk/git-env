@@ -20,14 +20,20 @@ create)
 encryption_method=kms
 encryption_key=global/keyRings/git-env/${2}
   """ > .gitenv/config
-  echo "created global/keyRings/git-env/${2}..."
+  git add .gitenv
+  git commit -m "initialised git-env"
+  echo "created global/keyRings/git-env/${2} ..."
   ;;
 add)
   echo "${2#*.}=${3}" >> ".gitenv/${2%.*}"
+  git add .gitenv
+  git commit -m "added new environment variable \"${2}\""
   echo "added new environment variable \"${2}\""
   ;;
 rotate)
   echo "${2#*.}=${3}" > ".gitenv/${2%.*}"
+  git add .gitenv
+  git commit -m "rotated environment variable \"${2}\""
   echo "rotated environment variable \"${2}\""
   ;;
 list)
