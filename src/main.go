@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"errors"
 	"flag"
 	"fmt"
 	"log"
@@ -32,8 +33,10 @@ func main() {
 	} else {
 		print_usage()
 		if r != "" {
+			e := errors.New(fmt.Sprintf("%s not a valid command", r))
+
 			l := log.New(os.Stderr, "", 0)
-			l.Println(fmt.Sprintf("\n%s is not a recognized command", r))
+			l.Println(fmt.Sprintf("\n%s", e))
 		}
 		os.Exit(1)
 	}
