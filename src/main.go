@@ -33,7 +33,7 @@ func main() {
 		print_usage()
 		if r != "" {
 			l := log.New(os.Stderr, "", 0)
-			l.Println(fmt.Sprintf("%s is not a recognized command", r))
+			l.Println(fmt.Sprintf("\n%s is not a recognized command", r))
 		}
 		os.Exit(1)
 	}
