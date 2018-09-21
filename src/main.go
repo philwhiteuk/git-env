@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"flag"
 	"fmt"
+	"log"
 	"os"
 )
 
@@ -31,26 +32,25 @@ func main() {
 	} else {
 		print_usage()
 		if r != "" {
-			fmt.Println(fmt.Sprintf("%s is not a recognized command", r))
+			l := log.New(os.Stderr, "", 0)
+			l.Println(fmt.Sprintf("%s is not a recognized command", r))
 		}
 		os.Exit(1)
 	}
-
 }
 
 func print_usage() {
-	var usage bytes.Buffer
+	l := log.New(os.Stderr, "", 0)
 
-	usage.WriteString("usage: git env [<options>] <command> [<args>]\n\n")
-	usage.WriteString("store and encrypt environment variables natively in git\n\n")
+	l.Println(fmt.Sprintf("usage: git env [<options>] <command> [<args>]\n"))
+	l.Println(fmt.Sprintf("store and encrypt environment variables natively in git"))
 
+	var b bytes.Buffer
 	for _, c := range commands {
-		command_usage := fmt.Sprintf("   %-11s %-14s\n", c.name, c.summary)
-		usage.WriteString(command_usage)
+		b.WriteString(fmt.Sprintf("   %-11s %-14s\n", c.name, c.summary))
 	}
+	l.Println(b.String())
 
-	fmt.Println(usage.String())
-
-	fmt.Println("global options:")
+	l.Println("global options:")
 	flag.PrintDefaults()
 }

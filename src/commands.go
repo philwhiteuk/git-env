@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
+	"os"
 )
 
 type Command interface {
@@ -19,15 +21,18 @@ type CommandOptions struct {
 var commands = []CommandOptions{}
 
 func (c CommandOptions) print_usage() {
-	fmt.Println(fmt.Sprintf("usage: git env %s\n", c.usage))
-	fmt.Println(fmt.Sprintf("%s\n", c.summary))
+	l := log.New(os.Stderr, "", 0)
 
-	fmt.Println("global options:")
+	l.Println(fmt.Sprintf("usage: git env %s\n", c.usage))
+	l.Println(fmt.Sprintf("%s\n", c.summary))
+
+	l.Println("global options:")
 	flag.PrintDefaults()
 
 	if c.flags.Name() != "" {
-		fmt.Println("\noptions:")
+		l.Println("\noptions:")
 		c.flags.PrintDefaults()
 	}
 
+	os.Exit(1)
 }
