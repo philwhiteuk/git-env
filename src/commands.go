@@ -29,7 +29,7 @@ func (c CommandOptions) print_usage() {
 	l.Println("global options:")
 	flag.PrintDefaults()
 
-	if c.flags.Name() != "" {
+	if c.flags != nil {
 		l.Println("\noptions:")
 		c.flags.PrintDefaults()
 	}
