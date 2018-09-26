@@ -9,11 +9,13 @@ import (
 	"os"
 )
 
+var commands = []CommandOptions{}
+
 func main() {
 	var command Command
 
 	var help bool
-	flag.BoolVar(&help, "h", false, "prints usage information")
+	flag.BoolVar(&help, "-help", false, "prints usage information")
 	flag.Parse()
 
 	r := ""
@@ -27,19 +29,18 @@ func main() {
 		}
 	}
 
+	l := log.New(os.Stderr, "", 0)
 	if command != nil {
-		command.print_usage()
-		return
+		b := command.Usage()
+		l.Println(b.String())
 	} else {
 		print_usage()
 		if r != "" {
 			e := errors.New(fmt.Sprintf("%s not a valid command", r))
-
-			l := log.New(os.Stderr, "", 0)
 			l.Println(fmt.Sprintf("\n%s", e))
 		}
-		os.Exit(1)
 	}
+	os.Exit(1)
 }
 
 func print_usage() {
@@ -54,6 +55,5 @@ func print_usage() {
 	}
 	l.Println(b.String())
 
-	l.Println("global options:")
 	flag.PrintDefaults()
 }

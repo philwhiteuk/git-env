@@ -1,14 +1,13 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
-	"log"
-	"os"
 )
 
 type Command interface {
-	print_usage()
+	Usage() bytes.Buffer
 }
 
 type CommandOptions struct {
@@ -18,21 +17,19 @@ type CommandOptions struct {
 	usage   string
 }
 
-var commands = []CommandOptions{}
+func (c CommandOptions) Usage() bytes.Buffer {
+	var b bytes.Buffer
 
-func (c CommandOptions) print_usage() {
-	l := log.New(os.Stderr, "", 0)
-
-	l.Println(fmt.Sprintf("usage: git env %s\n", c.usage))
-	l.Println(fmt.Sprintf("%s\n", c.summary))
-
-	l.Println("global options:")
-	flag.PrintDefaults()
+	b.WriteString(fmt.Sprintf("usage: git env %s\n\n", c.usage))
+	b.WriteString(fmt.Sprintf("%s\n\n", c.summary))
 
 	if c.flags != nil {
-		l.Println("\noptions:")
-		c.flags.PrintDefaults()
+		b.WriteString("options:\n")
+		defaults := func(f *flag.Flag) {
+			b.WriteString(fmt.Sprintf("   -%-11s %-14s\n", f.Name, f.Usage))
+		}
+		c.flags.VisitAll(defaults)
 	}
 
-	os.Exit(1)
+	return b
 }
