@@ -1,7 +1,11 @@
-default: build
+default: test build
 
-clean:
-	@rm ./git-env
 
 build:
-	@go build -o git-env src/*.go
+	export GOPATH=$$(pwd) && go build -o git-env main.go
+
+clean:
+	rm -rf ./pkg ./git-env;
+
+test: 
+	export GOPATH=$$(pwd) && go test -timeout 30s commands
